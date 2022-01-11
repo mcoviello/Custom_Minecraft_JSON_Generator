@@ -13,6 +13,7 @@ public class Generator {
 
     private void WriteToFile(File destFile, String textToWrite){
         try{
+            destFile.createNewFile();
             FileWriter writer = new FileWriter(destFile);
             writer.write(textToWrite);
             writer.close();
@@ -24,7 +25,7 @@ public class Generator {
 
     //- Generic Block Model File-//
     public void GenerateBlock(String blockName) {
-        File newFile = new File(parentFileDir + modName + "\\model\\block\\" + blockName + ".json");
+        File newFile = new File(parentFileDir + modName + "\\models\\block\\" + blockName + ".json");
         String toWrite = "{\n" +
                 " \"parent\": \"minecraft:block/cube_all\",\n" +
                 " \"textures\": {\n" +
@@ -37,7 +38,7 @@ public class Generator {
 
     //- Item Model Files -//
     public void GenerateBlockItem(String itemName){
-        File newFile = new File(parentFileDir + modName + "\\model\\item\\" + itemName + ".json");
+        File newFile = new File(parentFileDir + modName + "\\models\\item\\" + itemName + ".json");
         String toWrite = "{\n" +
                         " \"parent\": \"" + modName + ":block/" + itemName + "\"\n" +
                         "}";
@@ -46,7 +47,7 @@ public class Generator {
     public void GenerateItem(String parent, String itemName){
         //Parent refers to minecraft::item/{parent}
         //e.g. handheld
-        File newFile = new File(parentFileDir + modName + "\\model\\item\\" + itemName + ".json");
+        File newFile = new File(parentFileDir + modName + "\\models\\item\\" + itemName + ".json");
         String toWrite = "{\n" +
                 " \"parent\": \"item/" + parent +"\",\n" +
                 " \"textures\": {\n" +
@@ -61,7 +62,7 @@ public class Generator {
         File blockstate = new File(parentFileDir + modName + "\\blockstates\\" + blockName + ".json");
         String toWrite = "{\n" +
                 "  \"variants\": {\n" +
-                "    \"\": { \"model\": \"" + modName + ":block/" + blockName + "\" }\n" +
+                "    \"\": { \"models\": \"" + modName + ":block/" + blockName + "\" }\n" +
                 "  }\n" +
                 "}";
         WriteToFile(blockstate, toWrite);
@@ -70,30 +71,30 @@ public class Generator {
         File blockstate = new File(parentFileDir + modName + "\\blockstates\\" + blockName + "_button.json");
         String toWrite = "{\n" +
                 "  \"variants\": {\n" +
-                "    \"face=floor,facing=east,powered=false\":  { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"y\": 90 },\n" +
-                "    \"face=floor,facing=west,powered=false\":  { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"y\": 270 },\n" +
-                "    \"face=floor,facing=south,powered=false\": { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"y\": 180 },\n" +
-                "    \"face=floor,facing=north,powered=false\": { \"model\": \"" + modName + ":block/" + blockName + "_button\" },\n" +
-                "    \"face=wall,facing=east,powered=false\":  { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"uvlock\": true, \"x\": 90, \"y\": 90 },\n" +
-                "    \"face=wall,facing=west,powered=false\":  { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"uvlock\": true, \"x\": 90, \"y\": 270 },\n" +
-                "    \"face=wall,facing=south,powered=false\": { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"uvlock\": true, \"x\": 90, \"y\": 180 },\n" +
-                "    \"face=wall,facing=north,powered=false\": { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"uvlock\": true, \"x\": 90 },\n" +
-                "    \"face=ceiling,facing=east,powered=false\":  { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"x\": 180, \"y\": 270 },\n" +
-                "    \"face=ceiling,facing=west,powered=false\":  { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"x\": 180, \"y\": 90 },\n" +
-                "    \"face=ceiling,facing=south,powered=false\": { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"x\": 180 },\n" +
-                "    \"face=ceiling,facing=north,powered=false\": { \"model\": \"" + modName + ":block/" + blockName + "_button\", \"x\": 180, \"y\": 180 },\n" +
-                "    \"face=floor,facing=east,powered=true\":  { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"y\": 90 },\n" +
-                "    \"face=floor,facing=west,powered=true\":  { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"y\": 270 },\n" +
-                "    \"face=floor,facing=south,powered=true\": { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"y\": 180 },\n" +
-                "    \"face=floor,facing=north,powered=true\": { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\" },\n" +
-                "    \"face=wall,facing=east,powered=true\":  { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"uvlock\": true, \"x\": 90, \"y\": 90 },\n" +
-                "    \"face=wall,facing=west,powered=true\":  { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"uvlock\": true, \"x\": 90, \"y\": 270 },\n" +
-                "    \"face=wall,facing=south,powered=true\": { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"uvlock\": true, \"x\": 90, \"y\": 180 },\n" +
-                "    \"face=wall,facing=north,powered=true\": { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"uvlock\": true, \"x\": 90 },\n" +
-                "    \"face=ceiling,facing=east,powered=true\":  { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"x\": 180, \"y\": 270 },\n" +
-                "    \"face=ceiling,facing=west,powered=true\":  { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"x\": 180, \"y\": 90 },\n" +
-                "    \"face=ceiling,facing=south,powered=true\": { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"x\": 180 },\n" +
-                "    \"face=ceiling,facing=north,powered=true\": { \"model\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"x\": 180, \"y\": 180 }\n" +
+                "    \"face=floor,facing=east,powered=false\":  { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"y\": 90 },\n" +
+                "    \"face=floor,facing=west,powered=false\":  { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"y\": 270 },\n" +
+                "    \"face=floor,facing=south,powered=false\": { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"y\": 180 },\n" +
+                "    \"face=floor,facing=north,powered=false\": { \"models\": \"" + modName + ":block/" + blockName + "_button\" },\n" +
+                "    \"face=wall,facing=east,powered=false\":  { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"uvlock\": true, \"x\": 90, \"y\": 90 },\n" +
+                "    \"face=wall,facing=west,powered=false\":  { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"uvlock\": true, \"x\": 90, \"y\": 270 },\n" +
+                "    \"face=wall,facing=south,powered=false\": { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"uvlock\": true, \"x\": 90, \"y\": 180 },\n" +
+                "    \"face=wall,facing=north,powered=false\": { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"uvlock\": true, \"x\": 90 },\n" +
+                "    \"face=ceiling,facing=east,powered=false\":  { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"x\": 180, \"y\": 270 },\n" +
+                "    \"face=ceiling,facing=west,powered=false\":  { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"x\": 180, \"y\": 90 },\n" +
+                "    \"face=ceiling,facing=south,powered=false\": { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"x\": 180 },\n" +
+                "    \"face=ceiling,facing=north,powered=false\": { \"models\": \"" + modName + ":block/" + blockName + "_button\", \"x\": 180, \"y\": 180 },\n" +
+                "    \"face=floor,facing=east,powered=true\":  { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"y\": 90 },\n" +
+                "    \"face=floor,facing=west,powered=true\":  { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"y\": 270 },\n" +
+                "    \"face=floor,facing=south,powered=true\": { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"y\": 180 },\n" +
+                "    \"face=floor,facing=north,powered=true\": { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\" },\n" +
+                "    \"face=wall,facing=east,powered=true\":  { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"uvlock\": true, \"x\": 90, \"y\": 90 },\n" +
+                "    \"face=wall,facing=west,powered=true\":  { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"uvlock\": true, \"x\": 90, \"y\": 270 },\n" +
+                "    \"face=wall,facing=south,powered=true\": { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"uvlock\": true, \"x\": 90, \"y\": 180 },\n" +
+                "    \"face=wall,facing=north,powered=true\": { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"uvlock\": true, \"x\": 90 },\n" +
+                "    \"face=ceiling,facing=east,powered=true\":  { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"x\": 180, \"y\": 270 },\n" +
+                "    \"face=ceiling,facing=west,powered=true\":  { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"x\": 180, \"y\": 90 },\n" +
+                "    \"face=ceiling,facing=south,powered=true\": { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"x\": 180 },\n" +
+                "    \"face=ceiling,facing=north,powered=true\": { \"models\": \"" + modName + ":block/" + blockName + "_button_pressed\", \"x\": 180, \"y\": 180 }\n" +
                 "  }\n" +
                 "}";
         WriteToFile(blockstate, toWrite);
@@ -103,123 +104,123 @@ public class Generator {
         String toWrite = "{\n" +
                 "  \"variants\": {\n" +
                 "    \"facing=east,half=lower,hinge=left,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom\"\n" +
                 "    },\n" +
                 "    \"facing=east,half=lower,hinge=left,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=east,half=lower,hinge=right,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\"\n" +
                 "    },\n" +
                 "    \"facing=east,half=lower,hinge=right,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=east,half=upper,hinge=left,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top\"\n" +
                 "    },\n" +
                 "    \"facing=east,half=upper,hinge=left,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=east,half=upper,hinge=right,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top_hinge\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top_hinge\"\n" +
                 "    },\n" +
                 "    \"facing=east,half=upper,hinge=right,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=north,half=lower,hinge=left,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=north,half=lower,hinge=left,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\"\n" +
                 "    },\n" +
                 "    \"facing=north,half=lower,hinge=right,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=north,half=lower,hinge=right,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=north,half=upper,hinge=left,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=north,half=upper,hinge=left,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top_hinge\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top_hinge\"\n" +
                 "    },\n" +
                 "    \"facing=north,half=upper,hinge=right,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=north,half=upper,hinge=right,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=south,half=lower,hinge=left,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=south,half=lower,hinge=left,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=south,half=lower,hinge=right,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=south,half=lower,hinge=right,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom\"\n" +
                 "    },\n" +
                 "    \"facing=south,half=upper,hinge=left,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=south,half=upper,hinge=left,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=south,half=upper,hinge=right,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=south,half=upper,hinge=right,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top\"\n" +
                 "    },\n" +
                 "    \"facing=west,half=lower,hinge=left,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=west,half=lower,hinge=left,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=west,half=lower,hinge=right,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom_hinge\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=west,half=lower,hinge=right,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_bottom\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=west,half=upper,hinge=left,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=west,half=upper,hinge=left,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=west,half=upper,hinge=right,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top_hinge\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=west,half=upper,hinge=right,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_door_top\",\n" +
                 "      \"y\": 90\n" +
                 "    }\n" +
                 "  }\n" +
@@ -232,7 +233,7 @@ public class Generator {
                 "  \"multipart\": [\n" +
                 "    {\n" +
                 "      \"apply\": {\n" +
-                "        \"model\": \"" + modName + ":block/" + blockName + "_fence_post\"\n" +
+                "        \"models\": \"" + modName + ":block/" + blockName + "_fence_post\"\n" +
                 "      }\n" +
                 "    },\n" +
                 "    {\n" +
@@ -240,7 +241,7 @@ public class Generator {
                 "        \"north\": \"true\"\n" +
                 "      },\n" +
                 "      \"apply\": {\n" +
-                "        \"model\": \"" + modName + ":block/" + blockName + "_fence_side\",\n" +
+                "        \"models\": \"" + modName + ":block/" + blockName + "_fence_side\",\n" +
                 "        \"uvlock\": true\n" +
                 "      }\n" +
                 "    },\n" +
@@ -249,7 +250,7 @@ public class Generator {
                 "        \"east\": \"true\"\n" +
                 "      },\n" +
                 "      \"apply\": {\n" +
-                "        \"model\": \"" + modName + ":block/" + blockName + "_fence_side\",\n" +
+                "        \"models\": \"" + modName + ":block/" + blockName + "_fence_side\",\n" +
                 "        \"y\": 90,\n" +
                 "        \"uvlock\": true\n" +
                 "      }\n" +
@@ -259,7 +260,7 @@ public class Generator {
                 "        \"south\": \"true\"\n" +
                 "      },\n" +
                 "      \"apply\": {\n" +
-                "        \"model\": \"" + modName + ":block/" + blockName + "_fence_side\",\n" +
+                "        \"models\": \"" + modName + ":block/" + blockName + "_fence_side\",\n" +
                 "        \"y\": 180,\n" +
                 "        \"uvlock\": true\n" +
                 "      }\n" +
@@ -269,7 +270,7 @@ public class Generator {
                 "        \"west\": \"true\"\n" +
                 "      },\n" +
                 "      \"apply\": {\n" +
-                "        \"model\": \"" + modName + ":block/" + blockName + "_fence_side\",\n" +
+                "        \"models\": \"" + modName + ":block/" + blockName + "_fence_side\",\n" +
                 "        \"y\": 270,\n" +
                 "        \"uvlock\": true\n" +
                 "      }\n" +
@@ -285,78 +286,78 @@ public class Generator {
                 "    \"facing=east,in_wall=false,open=false\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 270,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate\"\n" +
                 "    },\n" +
                 "    \"facing=east,in_wall=false,open=true\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 270,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_open\"\n" +
                 "    },\n" +
                 "    \"facing=east,in_wall=true,open=false\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 270,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_wall\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_wall\"\n" +
                 "    },\n" +
                 "    \"facing=east,in_wall=true,open=true\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 270,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_wall_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_wall_open\"\n" +
                 "    },\n" +
                 "    \"facing=north,in_wall=false,open=false\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 180,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate\"\n" +
                 "    },\n" +
                 "    \"facing=north,in_wall=false,open=true\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 180,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_open\"\n" +
                 "    },\n" +
                 "    \"facing=north,in_wall=true,open=false\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 180,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_wall\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_wall\"\n" +
                 "    },\n" +
                 "    \"facing=north,in_wall=true,open=true\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 180,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_wall_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_wall_open\"\n" +
                 "    },\n" +
                 "    \"facing=south,in_wall=false,open=false\": {\n" +
                 "      \"uvlock\": true,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate\"\n" +
                 "    },\n" +
                 "    \"facing=south,in_wall=false,open=true\": {\n" +
                 "      \"uvlock\": true,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_open\"\n" +
                 "    },\n" +
                 "    \"facing=south,in_wall=true,open=false\": {\n" +
                 "      \"uvlock\": true,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_wall\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_wall\"\n" +
                 "    },\n" +
                 "    \"facing=south,in_wall=true,open=true\": {\n" +
                 "      \"uvlock\": true,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_wall_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_wall_open\"\n" +
                 "    },\n" +
                 "    \"facing=west,in_wall=false,open=false\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 90,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate\"\n" +
                 "    },\n" +
                 "    \"facing=west,in_wall=false,open=true\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 90,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_open\"\n" +
                 "    },\n" +
                 "    \"facing=west,in_wall=true,open=false\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 90,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_wall\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_wall\"\n" +
                 "    },\n" +
                 "    \"facing=west,in_wall=true,open=true\": {\n" +
                 "      \"uvlock\": true,\n" +
                 "      \"y\": 90,\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_fence_gate_wall_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_fence_gate_wall_open\"\n" +
                 "    }\n" +
                 "  }\n" +
                 "}";
@@ -367,15 +368,15 @@ public class Generator {
         String toWrite = "{\n" +
                 "  \"variants\": {\n" +
                 "    \"axis=x\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_log_horizontal\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_log_horizontal\",\n" +
                 "      \"x\": 90,\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"axis=y\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_log\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_log\"\n" +
                 "    },\n" +
                 "    \"axis=z\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_log_horizontal\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_log_horizontal\",\n" +
                 "      \"x\": 90\n" +
                 "    }\n" +
                 "  }\n" +
@@ -386,8 +387,8 @@ public class Generator {
         File blockstate = new File(parentFileDir + modName + "\\blockstates\\" + blockName + "_pressure_plate.json");
         String toWrite = "{\n" +
                 "  \"variants\": {\n" +
-                "    \"powered=false\": { \"model\": \"" + modName + ":block/" + blockName + "_pressure_plate\" },\n" +
-                "    \"powered=true\": { \"model\": \"" + modName + ":block/" + blockName + "_pressure_plate_down\" }\n" +
+                "    \"powered=false\": { \"models\": \"" + modName + ":block/" + blockName + "_pressure_plate\" },\n" +
+                "    \"powered=true\": { \"models\": \"" + modName + ":block/" + blockName + "_pressure_plate_down\" }\n" +
                 "  }\n" +
                 "}";
         WriteToFile(blockstate, toWrite);
@@ -397,13 +398,13 @@ public class Generator {
         String toWrite = "{\n" +
                 "  \"variants\": {\n" +
                 "    \"type=bottom\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_slab\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_slab\"\n" +
                 "    },\n" +
                 "    \"type=double\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_planks\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_planks\"\n" +
                 "    },\n" +
                 "    \"type=top\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_slab_top\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_slab_top\"\n" +
                 "    }\n" +
                 "  }\n" +
                 "}";
@@ -414,206 +415,206 @@ public class Generator {
         String toWrite = "{\n" +
                 "  \"variants\": {\n" +
                 "    \"facing=east,half=bottom,shape=inner_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=east,half=bottom,shape=inner_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\"\n" +
                 "    },\n" +
                 "    \"facing=east,half=bottom,shape=outer_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=east,half=bottom,shape=outer_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\"\n" +
                 "    },\n" +
                 "    \"facing=east,half=bottom,shape=straight\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs\"\n" +
                 "    },\n" +
                 "    \"facing=east,half=top,shape=inner_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=east,half=top,shape=inner_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=east,half=top,shape=outer_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=east,half=top,shape=outer_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=east,half=top,shape=straight\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=bottom,shape=inner_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=bottom,shape=inner_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=bottom,shape=outer_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=bottom,shape=outer_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=bottom,shape=straight\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=top,shape=inner_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=top,shape=inner_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=top,shape=outer_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=top,shape=outer_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=north,half=top,shape=straight\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=south,half=bottom,shape=inner_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\"\n" +
                 "    },\n" +
                 "    \"facing=south,half=bottom,shape=inner_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=south,half=bottom,shape=outer_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\"\n" +
                 "    },\n" +
                 "    \"facing=south,half=bottom,shape=outer_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=south,half=bottom,shape=straight\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=south,half=top,shape=inner_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=south,half=top,shape=inner_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=south,half=top,shape=outer_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=south,half=top,shape=outer_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=south,half=top,shape=straight\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=bottom,shape=inner_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=bottom,shape=inner_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=bottom,shape=outer_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"y\": 90,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=bottom,shape=outer_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=bottom,shape=straight\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=top,shape=inner_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=top,shape=inner_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_inner\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=top,shape=outer_left\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=top,shape=outer_right\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs_outer\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 270,\n" +
                 "      \"uvlock\": true\n" +
                 "    },\n" +
                 "    \"facing=west,half=top,shape=straight\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_stairs\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 180,\n" +
                 "      \"uvlock\": true\n" +
@@ -627,67 +628,67 @@ public class Generator {
         String toWrite = "{\n" +
                 "  \"variants\": {\n" +
                 "    \"facing=east,half=bottom,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_bottom\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=east,half=bottom,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=east,half=top,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_top\",\n" +
                 "      \"y\": 90\n" +
                 "    },\n" +
                 "    \"facing=east,half=top,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=north,half=bottom,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_bottom\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_bottom\"\n" +
                 "    },\n" +
                 "    \"facing=north,half=bottom,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_open\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_open\"\n" +
                 "    },\n" +
                 "    \"facing=north,half=top,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_top\"\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_top\"\n" +
                 "    },\n" +
                 "    \"facing=north,half=top,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=south,half=bottom,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_bottom\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=south,half=bottom,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=south,half=top,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_top\",\n" +
                 "      \"y\": 180\n" +
                 "    },\n" +
                 "    \"facing=south,half=top,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 0\n" +
                 "    },\n" +
                 "    \"facing=west,half=bottom,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_bottom\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_bottom\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=west,half=bottom,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=west,half=top,open=false\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_top\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_top\",\n" +
                 "      \"y\": 270\n" +
                 "    },\n" +
                 "    \"facing=west,half=top,open=true\": {\n" +
-                "      \"model\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
+                "      \"models\": \"" + modName + ":block/" + blockName + "_trapdoor_open\",\n" +
                 "      \"x\": 180,\n" +
                 "      \"y\": 90\n" +
                 "    }\n" +
@@ -742,7 +743,7 @@ public class Generator {
     //-- Methods to generate the different parts of a building set --//
     public void GenerateButton(String blockName){
         String fullName = blockName + "_button";
-        File newFile = new File(parentFileDir + modName + "\\model\\block\\" + fullName + ".json");
+        File newFile = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
         String toWrite = "{\n" +
                 "  \"parent\": \"block/button\",\n" +
                 "  \"textures\": {\n" +
@@ -755,10 +756,10 @@ public class Generator {
     }
     public void GenerateDoor(String blockName){
         String fullName = blockName + "_door";
-        File doorTop = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_top.json");
-        File doorTopHinge = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_top_hinge.json");
-        File doorBottom = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_bottom.json");
-        File doorBottomHinge = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_bottom_hinge.json");
+        File doorTop = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_top.json");
+        File doorTopHinge = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_top_hinge.json");
+        File doorBottom = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_bottom.json");
+        File doorBottomHinge = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_bottom_hinge.json");
         String toWrite = "{\n" +
                 "  \"parent\": \"minecraft:block/door_top\",\n" +
                 "  \"textures\": {\n" +
@@ -797,9 +798,9 @@ public class Generator {
     }
     public void GenerateFence(String blockName){
         String fullName = blockName + "_fence";
-        File post = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_post.json");
-        File side = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_side.json");
-        File inv = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_inventory.json");
+        File post = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_post.json");
+        File side = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_side.json");
+        File inv = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_inventory.json");
         String toWrite = "{\n" +
                 "  \"parent\": \"minecraft:block/fence_post\",\n" +
                 "  \"textures\": {\n" +
@@ -827,8 +828,8 @@ public class Generator {
     }
     public void GenerateGate(String blockName){
         String fullName = blockName + "_fence_gate";
-        File gate = new File(parentFileDir + modName + "\\model\\block\\" + fullName + ".json");
-        File open = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_open.json");
+        File gate = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
+        File open = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_open.json");
         String toWrite = "{\n" +
                 "  \"parent\": \"minecraft:block/template_fence_gate\",\n" +
                 "  \"textures\": {\n" +
@@ -856,7 +857,7 @@ public class Generator {
     }
     public void GenerateLog(String blockName){
         String fullName = blockName + "_log";
-        File newFile = new File(parentFileDir + modName + "\\model\\block\\" + fullName + ".json");
+        File newFile = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
         String toWrite = "{\n" +
                 "\"parent\": \"minecraft:block/cube_column\",\n" +
                 "  \"textures\": {\n" +
@@ -878,8 +879,8 @@ public class Generator {
     }
     public void GeneratePressurePlate(String blockName){
         String fullName = blockName + "_pressure_plate";
-        File plateUp = new File(parentFileDir + modName + "\\model\\block\\" + fullName + ".json");
-        File plateDown = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_down.json");
+        File plateUp = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
+        File plateDown = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_down.json");
         String toWrite = "{\n" +
                 "  \"parent\": \"block/pressure_plate_up\",\n" +
                 "  \"textures\": {\n" +
@@ -900,13 +901,13 @@ public class Generator {
     }
     public void GenerateSapling(String blockName){
         String fullName = blockName + "_sapling";
-        File newFile = new File(parentFileDir + modName + "\\model\\block\\" + fullName + ".json");
+        File newFile = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
         String toWrite = "";
         WriteToFile(newFile, toWrite);
     }
     public void GenerateSlab(String blockName){
         String fullName = blockName + "_slab";
-        File newFile = new File(parentFileDir + modName + "\\model\\block\\" + fullName + ".json");
+        File newFile = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
         String toWrite = "{\n" +
                 "  \"parent\": \"minecraft:block/slab\",\n" +
                 "  \"textures\": {\n" +
@@ -922,9 +923,9 @@ public class Generator {
     }
     public void GenerateStairs(String blockName){
         String fullName = blockName + "_stairs";
-        File stairs = new File(parentFileDir + modName + "\\model\\block\\" + fullName + ".json");
-        File inner = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_inner.json");
-        File outer = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_outer.json");
+        File stairs = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
+        File inner = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_inner.json");
+        File outer = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_outer.json");
         String toWrite = "{\n" +
                 "  \"parent\": \"minecraft:block/stairs\",\n" +
                 "  \"textures\": {\n" +
@@ -958,7 +959,7 @@ public class Generator {
     }
     public void GenerateStrippedLog(String blockName){
         String fullName = "stripped_" + blockName + "_log";
-        File newFile = new File(parentFileDir + modName + "\\model\\block\\" + fullName + ".json");
+        File newFile = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
         String toWrite = "{\n" +
                 "\"parent\": \"minecraft:block/cube_column\",\n" +
                 "  \"textures\": {\n" +
@@ -980,9 +981,9 @@ public class Generator {
     }
     public void GenerateTrapdoor(String blockName){
         String fullName = blockName + "_trapdoor";
-        File bottom = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_bottom.json");
-        File top = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_open.json");
-        File open = new File(parentFileDir + modName + "\\model\\block\\" + fullName + "_top.json");
+        File bottom = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_bottom.json");
+        File top = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_open.json");
+        File open = new File(parentFileDir + modName + "\\models\\block\\" + fullName + "_top.json");
         String toWrite = "{\n" +
                 "  \"parent\": \"minecraft:block/template_trapdoor_bottom\",\n" +
                 "  \"textures\": {\n" +
@@ -1018,5 +1019,6 @@ public class Generator {
 
     public static void main(String[] args) {
         Generator gen = new Generator("theancientglades");
+        gen.GenerateBuildingSet("test");
     }
 }
