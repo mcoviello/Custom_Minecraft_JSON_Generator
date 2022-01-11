@@ -3,8 +3,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Generator {
-    String modName;
-    String parentFileDir;
+    private final String modName;
+    private final String parentFileDir;
 
     public Generator(String modName){
         this.modName = modName;
@@ -1032,6 +1032,43 @@ public class Generator {
         GenerateItem("generated", blockName + "_chestplate");
         GenerateItem("generated", blockName + "_helmet");
         GenerateItem("generated", blockName + "_leggings");
+    }
+
+    //- Crafting recipe generation methods-//
+    public void GenerateShapelessCraftingRecipe(String ingredient, String result, int ingCount, int resCount){
+        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result + ".json");
+        String toWrite = "{\n" +
+                "  \"type\": \"minecraft:crafting_shapeless\",\n" +
+                "  \"ingredients\": [\n" +
+                "    {\n" +
+                "      \"item\": \"" + modName + ":" + ingredient + "\"\n" +
+                "      \"count\": " + ingCount + "\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"result\": {\n" +
+                "    \"item\": \"" + modName + ":" + result +"\",\n" +
+                "    \"count\": " + resCount +
+                "  }\n" +
+                "}";
+        WriteToFile(newFile, toWrite);
+    }
+    public void GenerateShapelessCraftingRecipe(String ingredient, String result, String group, int ingCount, int resCount){
+        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result + ".json");
+        String toWrite = "{\n" +
+                "  \"type\": \"minecraft:crafting_shapeless\",\n" +
+                "  \"group\": \"" + group + "\",\n" +
+                "  \"ingredients\": [\n" +
+                "    {\n" +
+                "      \"item\": \"" + modName + ":" + ingredient + "\",\n" +
+                "      \"count\": " + ingCount + "\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"result\": {\n" +
+                "    \"item\": \"" + modName + ":" + result + "\",\n" +
+                "    \"count\": " + resCount + "\n" +
+                "  }\n" +
+                "}";
+        WriteToFile(newFile, toWrite);
     }
 
     public static void main(String[] args) {
