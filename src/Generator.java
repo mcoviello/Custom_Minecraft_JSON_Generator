@@ -13,10 +13,11 @@ public class Generator {
 
     private void WriteToFile(File destFile, String textToWrite){
         try{
-            destFile.createNewFile();
-            FileWriter writer = new FileWriter(destFile);
-            writer.write(textToWrite);
-            writer.close();
+            if(destFile.createNewFile()) {
+                FileWriter writer = new FileWriter(destFile);
+                writer.write(textToWrite);
+                writer.close();
+            }
         } catch (IOException e) {
             System.out.println("IO error writing to file " + destFile.getName() + ".\n");
             e.printStackTrace();
@@ -51,7 +52,7 @@ public class Generator {
         String toWrite = "{\n" +
                 " \"parent\": \"item/" + parent +"\",\n" +
                 " \"textures\": {\n" +
-                "  \"layer0\": \"" + modName + itemName + "\"\n" +
+                "  \"layer0\": \"" + modName + ":"+ itemName + "\"\n" +
                 " }\n" +
                 "}";
         WriteToFile(newFile, toWrite);
@@ -722,6 +723,7 @@ public class Generator {
         WriteToFile(ltFile, toWrite);
     }
 
+    //-- Methods to generate the different parts of a building set --//
     public void GenerateBuildingSet(String blockName){
         GenerateButton(blockName);
         GenerateDoor(blockName);
@@ -739,8 +741,6 @@ public class Generator {
         GenerateTrapdoor(blockName);
         GenerateWood(blockName);
     }
-
-    //-- Methods to generate the different parts of a building set --//
     public void GenerateButton(String blockName){
         String fullName = blockName + "_button";
         File newFile = new File(parentFileDir + modName + "\\models\\block\\" + fullName + ".json");
@@ -1017,8 +1017,27 @@ public class Generator {
         GenerateLootTable(fullName);
     }
 
+    //- Method to generate the different parts of an Item Set-//
+    public void GenerateItemSet(String blockName){
+        GenerateItem("handheld", blockName + "_axe");
+        GenerateItem("handheld", blockName + "_hoe");
+        GenerateItem("handheld", blockName + "_pickaxe");
+        GenerateItem("handheld", blockName + "_shovel");
+        GenerateItem("handheld", blockName + "_sword");
+    }
+
+    //- Method to generate an Armour Set -//
+    public void GenerateArmourSet(String blockName){
+        GenerateItem("generated", blockName + "_boots");
+        GenerateItem("generated", blockName + "_chestplate");
+        GenerateItem("generated", blockName + "_helmet");
+        GenerateItem("generated", blockName + "_leggings");
+    }
+
     public static void main(String[] args) {
         Generator gen = new Generator("theancientglades");
-        gen.GenerateBuildingSet("test");
+        //gen.GenerateBuildingSet("test");
+        gen.GenerateItemSet("test");
+        gen.GenerateArmourSet("test");
     }
 }
