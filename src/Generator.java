@@ -1038,124 +1038,184 @@ public class Generator {
     }
 
     //- Crafting recipe generation methods-//
-    public void GenerateShapelessCraftingRecipe(String ingredient, String result, int ingCount, int resCount){
-        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result + ".json");
+    public void GenerateShapelessCraftingRecipe(RecipeItem ingredient, RecipeItem result){
+        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result.name + ".json");
         String toWrite = "{\n" +
                 "  \"type\": \"minecraft:crafting_shapeless\",\n" +
                 "  \"ingredients\": [\n" +
                 "    {\n" +
-                "      \"item\": \"" + modName + ":" + ingredient + "\"\n" +
-                "      \"count\": " + ingCount + "\n" +
+                "      \"" + ingredient.GetTag() + "\":\"" + modName + ":" + ingredient.name + "\",\n" +
+                "      \"count\": " + ingredient.count + "\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"result\": {\n" +
-                "    \"item\": \"" + modName + ":" + result +"\",\n" +
-                "    \"count\": " + resCount +
+                "    \"" + result.GetTag() + "\": \"" + modName + ":" + result.name +"\",\n" +
+                "    \"count\": " + result.count +
                 "  }\n" +
                 "}";
         WriteToFile(newFile, toWrite);
     }
-    public void GenerateShapelessCraftingRecipe(String ingredient, String result, String group, int ingCount, int resCount){
-        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result + ".json");
+    public void GenerateShapelessCraftingRecipe(RecipeItem ingredient, RecipeItem result, String group){
+        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result.name + ".json");
         String toWrite = "{\n" +
                 "  \"type\": \"minecraft:crafting_shapeless\",\n" +
                 "  \"group\": \"" + group + "\",\n" +
                 "  \"ingredients\": [\n" +
                 "    {\n" +
-                "      \"item\": \"" + modName + ":" + ingredient + "\",\n" +
-                "      \"count\": " + ingCount + "\n" +
+                "      \"" + ingredient.GetTag()  + "\":\""+ modName + ":" + ingredient.name + "\",\n" +
+                "      \"count\": " + ingredient.count + "\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"result\": {\n" +
-                "    \"item\": \"" + modName + ":" + result + "\",\n" +
-                "    \"count\": " + resCount + "\n" +
+                "    \"" + result.GetTag() + "\": \"" + modName + ":" + result.name +"\",\n" +
+                "    \"count\": " + result.count +
                 "  }\n" +
                 "}";
         WriteToFile(newFile, toWrite);
     }
 
-    public void GenerateShapedCraftingRecipe(HashMap<Character, String> ingredients, Character[] recipe, String result, int resultCount){
-        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result + ".json");
+    public void GenerateShapedCraftingRecipe(RecipeItem[] ingredients, RecipeItem result, Character[] recipe){
+        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result.name + ".json");
+
         String toWrite = "{\n" +
                 "  \"type\": \"minecraft:crafting_shaped\",\n" +
                 "  \"pattern\": [\n";
         for (int i = 0; i < 3; ++i){
+            if(recipe[i * 3] == '\0' && recipe[(i * 3) + 1] == '\0' && recipe[(i * 3) + 2] == '\0')
+                continue;
+            if(i != 0){
+                toWrite += ",\n";
+            }
             toWrite += "    \"";
             for(int j = i * 3; j < (i*3) + 3; ++j){
                 if(recipe[j] == '\0')
                     continue;
                 toWrite += recipe[j];
             }
-
-            toWrite += (i == 2) ? ("\"\n") : ("\",\n");
+            toWrite += ("\"");
         }
         toWrite +=
-                "  ],\n" +
+                "\n  ],\n" +
                         "  \"key\": {\n";
         int count = 0;
-        for (Map.Entry<Character, String> entry : ingredients.entrySet()) {
-            count++;
+        for (int i = 0; i < ingredients.length; i++) {
             //Add all of the ingredients to the keys
             toWrite +=
-                    "    \"" + entry.getKey() + "\": {\n" +
-                            "      \"item\": \"" + modName + ":" + entry.getValue() + "\"\n" +
-                            ((count < ingredients.keySet().size()) ? ("    },\n") : ("    }\n"));
+                    "    \"" + ingredients[i].symbol + "\": {\n" +
+                            "      \"" + ingredients[i].GetTag() +"\": \"" + modName + ":" + ingredients[i].name + "\"\n" +
+                            ((i < ingredients.length-1) ? ("    },\n") : ("    }\n"));
         }
         //Add the resulting item, and count;
         toWrite +=
                 "  },\n" +
                         "  \"result\": {\n" +
-                        "    \"item\": \"" + modName + ":" + result + "\",\n" +
-                        "    \"count\": " + resultCount + "\n" +
+                        "    \"item\": \"" + modName + ":" + result.name + "\",\n" +
+                        "    \"count\": " + result.count + "\n" +
                         "  }\n" +
                         "}";
         WriteToFile(newFile, toWrite);
     }
-
-    public void GenerateShapedCraftingRecipe(HashMap<Character, String> ingredients, Character recipe[], String result, int resultCount, String groupName) {
-        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result + ".json");
+    public void GenerateShapedCraftingRecipe(RecipeItem[] ingredients, RecipeItem result, Character[] recipe, String groupName) {
+        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result.name + ".json");
         String toWrite = "{\n" +
                 "  \"type\": \"minecraft:crafting_shaped\",\n" +
                 "\"group\": \"" + groupName + "\",\n" +
                 "  \"pattern\": [\n";
                 for (int i = 0; i < 3; ++i){
+                    if(recipe[i * 3] == '\0' && recipe[(i * 3) + 1] == '\0' && recipe[(i * 3) + 2] == '\0')
+                        continue;
+                    if(i != 0){
+                        toWrite += ",\n";
+                    }
                     toWrite += "    \"";
                     for(int j = i * 3; j < (i*3) + 3; ++j){
                         if(recipe[j] == '\0')
                             continue;
                         toWrite += recipe[j];
                     }
-
-                    toWrite += (i == 2) ? ("\"\n") : ("\",\n");
+                    toWrite += ("\"");
                 }
                 toWrite +=
-                    "  ],\n" +
+                    "\n  ],\n" +
                     "  \"key\": {\n";
-        int count = 0;
-        for (Map.Entry<Character, String> entry : ingredients.entrySet()) {
-            count++;
+        for (int i = 0; i < ingredients.length; i++) {
             //Add all of the ingredients to the keys
             toWrite +=
-                    "    \"" + entry.getKey() + "\": {\n" +
-                            "      \"item\": \"" + modName + ":" + entry.getValue() + "\"\n" +
-                            ((count < ingredients.keySet().size()) ? ("    },\n") : ("    }\n"));
+                    "    \"" + ingredients[i].symbol + "\": {\n" +
+                    "      \"" + ingredients[i].GetTag() +"\": \"" + modName + ":" + ingredients[i].name + "\"\n" +
+                    ((i < ingredients.length-1) ? ("    },\n") : ("    }\n"));
         }
         //Add the resulting item, and count;
         toWrite +=
                 "  },\n" +
                         "  \"result\": {\n" +
-                        "    \"item\": \"" + modName + ":" + result + "\",\n" +
-                        "    \"count\": " + resultCount + "\n" +
+                        "    \"item\": \"" + modName + ":" + result.name + "\",\n" +
+                        "    \"count\": " + result.count + "\n" +
                         "  }\n" +
                         "}";
         WriteToFile(newFile, toWrite);
     }
 
+    public void GenerateBuildingSetRecipes(String woodName){
+        //Shapeless Crafting Recipes
+        GenerateShapelessCraftingRecipe(new RecipeItem(woodName + "_planks"), new RecipeItem(woodName + "_button"));
+        GenerateShapelessCraftingRecipe(new RecipeItem(woodName + "_logs", true), new RecipeItem(woodName + "_planks", 4));
+
+        //- Generate all of the Shaped BuildingSet Recipes-//
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('#', woodName + "_planks")}
+                , new RecipeItem(woodName+ "_door", 3), Recipes.GetRecipe(Recipes.CraftableItems.DOOR));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_sticks"), new RecipeItem('W', woodName + "_planks")}
+                , new RecipeItem(woodName+ "_fence", 3), Recipes.GetRecipe(Recipes.CraftableItems.FENCE));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_sticks"), new RecipeItem('W', woodName + "_planks")}
+                , new RecipeItem(woodName+ "_fence_gate"), Recipes.GetRecipe(Recipes.CraftableItems.FENCE_GATE));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_planks")}
+                , new RecipeItem(woodName+ "_pressure_plate"), Recipes.GetRecipe(Recipes.CraftableItems.PRESSURE_PLATE));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_planks")}
+                , new RecipeItem(woodName+ "_slab", 6), Recipes.GetRecipe(Recipes.CraftableItems.SLAB));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_planks")}
+                , new RecipeItem(woodName+ "_stairs", 4), Recipes.GetRecipe(Recipes.CraftableItems.STAIRS));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_planks")}
+                , new RecipeItem(woodName+ "_stick", 2), Recipes.GetRecipe(Recipes.CraftableItems.STICK));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', "stripped_" + woodName + "_log")}
+                , new RecipeItem("stripped_" + woodName + "_wood", 3), Recipes.GetRecipe(Recipes.CraftableItems.STRIPPED_WOOD));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_planks")}
+                , new RecipeItem(woodName+ "_trapdoor", 2), Recipes.GetRecipe(Recipes.CraftableItems.TRAPDOOR));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_log")}
+                , new RecipeItem(woodName+ "_wall", 6), Recipes.GetRecipe(Recipes.CraftableItems.WALL));
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_log")}
+                , new RecipeItem(woodName+ "_wood", 3), Recipes.GetRecipe(Recipes.CraftableItems.WOOD));
+    }
+    public void GenerateArmourSetRecipes(String blockName){
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName)}
+                , new RecipeItem(blockName+ "_boots"), Recipes.GetRecipe(Recipes.CraftableItems.BOOTS));
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName)}
+                , new RecipeItem(blockName+ "_chestplate"), Recipes.GetRecipe(Recipes.CraftableItems.CHESTPLATE));
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName)}
+                , new RecipeItem(blockName+ "_helmet"), Recipes.GetRecipe(Recipes.CraftableItems.HELMET));
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName)}
+                , new RecipeItem(blockName+ "_leggings"), Recipes.GetRecipe(Recipes.CraftableItems.LEGGINGS));
+    }
+    public void GenerateToolSetRecipes(String blockName){
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+                , new RecipeItem(blockName+ "_axe", 3), Recipes.GetRecipe(Recipes.CraftableItems.AXE));
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+                , new RecipeItem(blockName+ "_hoe", 3), Recipes.GetRecipe(Recipes.CraftableItems.HOE));
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+                , new RecipeItem(blockName+ "_pickaxe", 3), Recipes.GetRecipe(Recipes.CraftableItems.PICKAXE));
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+                , new RecipeItem(blockName+ "_shovel", 3), Recipes.GetRecipe(Recipes.CraftableItems.SHOVEL));
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+                , new RecipeItem(blockName+ "_sword", 3), Recipes.GetRecipe(Recipes.CraftableItems.SWORD));
+    }
+    
+    //- Generate Recipes -//
     public static void main(String[] args) {
         Generator gen = new Generator("theancientglades");
-        //gen.GenerateBuildingSet("test");
-        //gen.GenerateItemSet("test");
-        //gen.GenerateArmourSet("test");
-
+        gen.GenerateBuildingSet("test");
+        gen.GenerateItemSet("test");
+        gen.GenerateArmourSet("test");
+        gen.GenerateBuildingSetRecipes("test");
+        gen.GenerateArmourSetRecipes("test");
+        gen.GenerateToolSetRecipes("test");
     }
 }
