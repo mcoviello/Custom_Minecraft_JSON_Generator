@@ -1,11 +1,14 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Generator {
     private final String modName;
     private final String parentFileDir;
 
+    private final char noChar = Character.MIN_VALUE;
     public Generator(String modName){
         this.modName = modName;
         parentFileDir = System.getenv("PATH");
@@ -1071,10 +1074,88 @@ public class Generator {
         WriteToFile(newFile, toWrite);
     }
 
+    public void GenerateShapedCraftingRecipe(HashMap<Character, String> ingredients, Character[] recipe, String result, int resultCount){
+        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result + ".json");
+        String toWrite = "{\n" +
+                "  \"type\": \"minecraft:crafting_shaped\",\n" +
+                "  \"pattern\": [\n";
+        for (int i = 0; i < 3; ++i){
+            toWrite += "    \"";
+            for(int j = i * 3; j < (i*3) + 3; ++j){
+                if(recipe[j] == '\0')
+                    continue;
+                toWrite += recipe[j];
+            }
+
+            toWrite += (i == 2) ? ("\"\n") : ("\",\n");
+        }
+        toWrite +=
+                "  ],\n" +
+                        "  \"key\": {\n";
+        int count = 0;
+        for (Map.Entry<Character, String> entry : ingredients.entrySet()) {
+            count++;
+            //Add all of the ingredients to the keys
+            toWrite +=
+                    "    \"" + entry.getKey() + "\": {\n" +
+                            "      \"item\": \"" + modName + ":" + entry.getValue() + "\"\n" +
+                            ((count < ingredients.keySet().size()) ? ("    },\n") : ("    }\n"));
+        }
+        //Add the resulting item, and count;
+        toWrite +=
+                "  },\n" +
+                        "  \"result\": {\n" +
+                        "    \"item\": \"" + modName + ":" + result + "\",\n" +
+                        "    \"count\": " + resultCount + "\n" +
+                        "  }\n" +
+                        "}";
+        WriteToFile(newFile, toWrite);
+    }
+
+    public void GenerateShapedCraftingRecipe(HashMap<Character, String> ingredients, Character recipe[], String result, int resultCount, String groupName) {
+        File newFile = new File(parentFileDir + "..\\data\\" + modName + "\\recipes\\" + result + ".json");
+        String toWrite = "{\n" +
+                "  \"type\": \"minecraft:crafting_shaped\",\n" +
+                "\"group\": \"" + groupName + "\",\n" +
+                "  \"pattern\": [\n";
+                for (int i = 0; i < 3; ++i){
+                    toWrite += "    \"";
+                    for(int j = i * 3; j < (i*3) + 3; ++j){
+                        if(recipe[j] == '\0')
+                            continue;
+                        toWrite += recipe[j];
+                    }
+
+                    toWrite += (i == 2) ? ("\"\n") : ("\",\n");
+                }
+                toWrite +=
+                    "  ],\n" +
+                    "  \"key\": {\n";
+        int count = 0;
+        for (Map.Entry<Character, String> entry : ingredients.entrySet()) {
+            count++;
+            //Add all of the ingredients to the keys
+            toWrite +=
+                    "    \"" + entry.getKey() + "\": {\n" +
+                            "      \"item\": \"" + modName + ":" + entry.getValue() + "\"\n" +
+                            ((count < ingredients.keySet().size()) ? ("    },\n") : ("    }\n"));
+        }
+        //Add the resulting item, and count;
+        toWrite +=
+                "  },\n" +
+                        "  \"result\": {\n" +
+                        "    \"item\": \"" + modName + ":" + result + "\",\n" +
+                        "    \"count\": " + resultCount + "\n" +
+                        "  }\n" +
+                        "}";
+        WriteToFile(newFile, toWrite);
+    }
+
     public static void main(String[] args) {
         Generator gen = new Generator("theancientglades");
         //gen.GenerateBuildingSet("test");
-        gen.GenerateItemSet("test");
-        gen.GenerateArmourSet("test");
+        //gen.GenerateItemSet("test");
+        //gen.GenerateArmourSet("test");
+
     }
 }
