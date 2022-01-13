@@ -739,6 +739,7 @@ public class Generator {
         GenerateSapling(blockName);
         GenerateSlab(blockName);
         GenerateStairs(blockName);
+        GenerateItem("handheld", blockName + "_stick");
         GenerateStrippedLog(blockName);
         GenerateStrippedWood(blockName);
         GenerateTrapdoor(blockName);
@@ -1021,7 +1022,7 @@ public class Generator {
     }
 
     //- Method to generate the different parts of an Item Set-//
-    public void GenerateItemSet(String blockName){
+    public void GenerateToolSet(String blockName){
         GenerateItem("handheld", blockName + "_axe");
         GenerateItem("handheld", blockName + "_hoe");
         GenerateItem("handheld", blockName + "_pickaxe");
@@ -1164,9 +1165,9 @@ public class Generator {
         //- Generate all of the Shaped BuildingSet Recipes-//
         GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('#', woodName + "_planks")}
                 , new RecipeItem(woodName+ "_door", 3), Recipes.GetRecipe(Recipes.CraftableItems.DOOR));
-        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_sticks"), new RecipeItem('W', woodName + "_planks")}
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_stick"), new RecipeItem('W', woodName + "_planks")}
                 , new RecipeItem(woodName+ "_fence", 3), Recipes.GetRecipe(Recipes.CraftableItems.FENCE));
-        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_sticks"), new RecipeItem('W', woodName + "_planks")}
+        GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_stick"), new RecipeItem('W', woodName + "_planks")}
                 , new RecipeItem(woodName+ "_fence_gate"), Recipes.GetRecipe(Recipes.CraftableItems.FENCE_GATE));
         GenerateShapedCraftingRecipe(new RecipeItem[] {new RecipeItem('#', woodName + "_planks")}
                 , new RecipeItem(woodName+ "_pressure_plate"), Recipes.GetRecipe(Recipes.CraftableItems.PRESSURE_PLATE));
@@ -1196,15 +1197,15 @@ public class Generator {
                 , new RecipeItem(blockName+ "_leggings"), Recipes.GetRecipe(Recipes.CraftableItems.LEGGINGS));
     }
     public void GenerateToolSetRecipes(String blockName){
-        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', blockName +"_stick")}
                 , new RecipeItem(blockName+ "_axe", 3), Recipes.GetRecipe(Recipes.CraftableItems.AXE));
-        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', blockName + "_stick")}
                 , new RecipeItem(blockName+ "_hoe", 3), Recipes.GetRecipe(Recipes.CraftableItems.HOE));
-        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', blockName + "_stick")}
                 , new RecipeItem(blockName+ "_pickaxe", 3), Recipes.GetRecipe(Recipes.CraftableItems.PICKAXE));
-        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', blockName + "_stick")}
                 , new RecipeItem(blockName+ "_shovel", 3), Recipes.GetRecipe(Recipes.CraftableItems.SHOVEL));
-        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', "stick")}
+        GenerateShapedCraftingRecipe(new RecipeItem[]{new RecipeItem('X', blockName), new RecipeItem('#', blockName + "_stick")}
                 , new RecipeItem(blockName+ "_sword", 3), Recipes.GetRecipe(Recipes.CraftableItems.SWORD));
     }
     
@@ -1212,10 +1213,10 @@ public class Generator {
     public static void main(String[] args) {
         Generator gen = new Generator("theancientglades");
         gen.GenerateBuildingSet("test");
-        gen.GenerateItemSet("test");
         gen.GenerateArmourSet("test");
+        //gen.GenerateToolSet("test");
         gen.GenerateBuildingSetRecipes("test");
         gen.GenerateArmourSetRecipes("test");
-        gen.GenerateToolSetRecipes("test");
+        //gen.GenerateToolSetRecipes("test");
     }
 }
