@@ -4,6 +4,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+*Generator
+*    This class is used to generate the various JSON files for minecraft items.
+*    It generates Recipes, Models, LootTables and Blockstates.
+*
+*    It provides some standard methods for generating sets of items, or you can
+*    use the generic methods to generate your own, for completely custom items.
+*
+*    Authored by Michael Coviello, 2022
+ */
+
 public class Generator {
     private final String modName;
     private final String parentFileDir;
