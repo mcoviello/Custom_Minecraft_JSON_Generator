@@ -763,7 +763,8 @@ public class Generator {
                 "  \"parent\": \"block/button\",\n" +
                 "  \"textures\": {\n" +
                 "    \"texture\": \"" + modName + ":block/" + blockName + "_planks\"\n" +
-                "  }";
+                "  }\n" +
+                "}";
         WriteToFile(newFile, toWrite);
         GenerateBlockItem(blockName + "_inventory");
         GenerateButtonBlockstate(blockName);
@@ -1223,11 +1224,12 @@ public class Generator {
     //- Generate Recipes -//
     public static void main(String[] args) {
         Generator gen = new Generator("theancientglades");
-        gen.GenerateBuildingSet("test");
-        gen.GenerateArmourSet("test");
-        //gen.GenerateToolSet("test");
-        gen.GenerateBuildingSetRecipes("test");
-        gen.GenerateArmourSetRecipes("test");
-        //gen.GenerateToolSetRecipes("test");
+        String blockName = "alga";
+        gen.GenerateBuildingSet(blockName);
+        gen.GenerateArmourSet(blockName);
+        //gen.GenerateToolSet(blockName);
+        gen.GenerateBuildingSetRecipes(blockName);
+        gen.GenerateArmourSetRecipes(blockName);
+        //gen.GenerateToolSetRecipes(blockName);
     }
 }

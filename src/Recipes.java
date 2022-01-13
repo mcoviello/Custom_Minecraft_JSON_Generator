@@ -25,7 +25,7 @@ public class Recipes {
     static{
         ShapedRecipes.put(CraftableItems.AXE,               new Character[] {'\0','X','X','\0','X','#','\0',' ','#'});
         ShapedRecipes.put(CraftableItems.BOOTS,             new Character[] {' ',' ',' ','X',' ','X','X',' ','X'});
-        ShapedRecipes.put(CraftableItems.CHESTPLATE,        new Character[] {'X','\0','X','X','X','X','X','X','X'});
+        ShapedRecipes.put(CraftableItems.CHESTPLATE,        new Character[] {'X',' ','X','X','X','X','X','X','X'});
         ShapedRecipes.put(CraftableItems.DOOR,              new Character[] {'\0','#','#','\0','#','#','\0','#','#'});
         ShapedRecipes.put(CraftableItems.FENCE,             new Character[] {'W','#','W','W','#','W','\0','\0','\0'});
         ShapedRecipes.put(CraftableItems.FENCE_GATE,        new Character[] {'#','W','#','#','W','#','\0','\0','\0'});
